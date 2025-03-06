@@ -1,9 +1,27 @@
 import { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
 
+const basePath = '/app-path'
+const basePathConfig: NextConfig = {
+  basePath,
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath
+  },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: basePath,
+        basePath: false,
+        permanent: false
+      }
+    ]
+  }
+}
+
 const nextConfig: NextConfig = {
   output: 'standalone',
-  basePath: '/',
+  ...basePathConfig,
   experimental: {
     optimizePackageImports: [
       '@mantine/core',

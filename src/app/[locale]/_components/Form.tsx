@@ -1,14 +1,14 @@
 'use client'
 
-import { useDemoList } from '@/services/demo/queries'
+import { useDemoList, useDemoCreate } from '@/services/demo/hooks'
 import { Button, Checkbox, ComboboxItem, Group, Select, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import { notifications } from '@mantine/notifications'
 import { zodResolver } from 'mantine-form-zod-resolver'
 import { z } from 'zod'
 
 export default function Form() {
   const item = useDemoList({ limit: 10 })
+  const create = useDemoCreate()
 
   const schema = z.object({
     email: z.string().email({
@@ -29,6 +29,7 @@ export default function Form() {
       termsOfService: false,
       item: '1'
     },
+    validateInputOnChange: true,
     validateInputOnBlur: true,
     validate: zodResolver(schema)
   })
@@ -37,25 +38,26 @@ export default function Form() {
     item.data?.data?.map((item) => ({ label: item.name, value: item.id.toString() })) || []
 
   const handleSubmit = async (values: typeof form.values) => {
-    await new Promise((resolve) => setTimeout(() => resolve(values), 3000))
-    console.log(values)
-    notifications.show({
-      title: 'Success',
-      message: 'Your form has been submitted',
-      position: 'bottom-center'
+    create.mutate({
+      id: 0,
+      name: values.email
     })
   }
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)} className='w-full max-w-md'>
-      <Select
-        label='Select'
-        placeholder='Pick value'
-        key={form.key('item')}
-        data={data}
-        disabled={item.isLoading}
-        {...form.getInputProps('item')}
-      />
+      {data.length > 0 && (
+        <Select
+          withAsterisk
+          label='Select'
+          placeholder='Pick value'
+          key={form.key('item')}
+          data={data}
+          checkIconPosition='right'
+          nothingFoundMessage='Nothing found...'
+          {...form.getInputProps('item')}
+        />
+      )}
 
       <TextInput
         withAsterisk
@@ -73,7 +75,7 @@ export default function Form() {
       />
 
       <Group mt='md'>
-        <Button type='submit' fullWidth disabled={!form.isValid()} loading={form.submitting}>
+        <Button type='submit' fullWidth disabled={!form.isValid()} loading={create.isPending}>
           Submit
         </Button>
       </Group>

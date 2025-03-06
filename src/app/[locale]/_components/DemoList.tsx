@@ -1,6 +1,6 @@
 'use client'
 
-import { useDemoList } from '@/services/demo/queries'
+import { useDemoList } from '@/services/demo/hooks'
 import { Button, Group } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
 import { useState } from 'react'

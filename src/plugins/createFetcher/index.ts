@@ -1,6 +1,6 @@
 import { ServiceError } from '@/services/common/interfaces'
 import { modals } from '@mantine/modals'
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 
 export interface FetcherOptions extends AxiosRequestConfig {
   mock?: boolean
@@ -18,6 +18,7 @@ export const defaultOptions: FetcherOptions = {
 }
 
 const shouldUseMockup = (options: FetcherOptions) => {
+  if (process.env.NODE_ENV !== 'development') return false
   if (!options.mock) return false
   if (options.jsonMockup === '') return false
 
@@ -34,7 +35,8 @@ function createFetcher<T>(options: FetcherOptions) {
     async function callFetch() {
       try {
         if (shouldUseMockup(fetchOptions)) {
-          const response = await axios.get<T>(fetchOptions.jsonMockup || '')
+          const basePath = process.env.NEXT_PUBLIC_BASE_PATH
+          const response = await axios.get<T>(`${basePath}${fetchOptions.jsonMockup}`)
           resolve(response.data)
         } else {
           const response = await axios.request<T>(fetchOptions)
@@ -43,9 +45,7 @@ function createFetcher<T>(options: FetcherOptions) {
       } catch (error) {
         let title = 'Error'
         let message = 'Service Error'
-        console.log(error)
 
-        // check if error is an instance of AxiosError
         if (axios.isAxiosError(error)) {
           title = error.response?.statusText ?? 'Error'
           message = error.response?.data.message || error.message

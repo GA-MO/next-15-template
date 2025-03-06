@@ -19,7 +19,7 @@ export function AppErrorModal({
       <Text size='sm'>{innerProps.message}</Text>
       <Space h='md' />
       <Button fullWidth onClick={() => context.closeModal(id)}>
-        Close modal
+        Close
       </Button>
     </div>
   )
