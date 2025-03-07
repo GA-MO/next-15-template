@@ -4,6 +4,7 @@ import createNextIntlPlugin from 'next-intl/plugin'
 const basePath = '/app-path'
 const basePathConfig: NextConfig = {
   basePath,
+  assetPrefix: basePath,
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath
   },
