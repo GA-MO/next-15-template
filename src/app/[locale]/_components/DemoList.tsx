@@ -1,6 +1,6 @@
 'use client'
 
-import { useDemoList } from '@/services/demo/hooks'
+import { useDemoList } from '@/services/demo'
 import { Button, Group } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
 import { useState } from 'react'
@@ -13,7 +13,7 @@ export default function DemoList() {
 
   return (
     <div>
-      {data?.data.map((item) => <DemoItem key={item.id} name={item.name} />)}
+      {data?.map((item) => <DemoItem key={item.id} name={item.name} />)}
       <Button onClick={() => refetch()}>Refetch</Button>
       <br />
       <br />

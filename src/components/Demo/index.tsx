@@ -3,5 +3,5 @@ interface Props {
 }
 
 export default function Demo(props: Props) {
-  return <div>{props.text}</div>
+  return <div data-testid='demo'>{props.text}</div>
 }

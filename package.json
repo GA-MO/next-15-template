@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest"
   },
   "dependencies": {
     "@mantine/core": "^7.17.1",
@@ -20,7 +21,7 @@
     "axios": "^1.8.1",
     "dayjs": "^1.11.13",
     "mantine-form-zod-resolver": "^1.1.0",
-    "next": "15.2.0",
+    "next": "^15.2.3",
     "next-intl": "^3.26.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -30,15 +31,20 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.2.0",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "19.0.10",
+    "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9",
     "eslint-config-next": "15.2.0",
+    "jsdom": "^26.0.0",
     "postcss-preset-mantine": "^1.17.0",
     "postcss-simple-vars": "^7.0.1",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.0.8"
   }
 }

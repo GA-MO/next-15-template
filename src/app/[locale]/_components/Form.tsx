@@ -1,6 +1,6 @@
 'use client'
 
-import { useDemoList, useDemoCreate } from '@/services/demo/hooks'
+import { useDemoList, useDemoCreate } from '@/services/demo'
 import { Button, Checkbox, ComboboxItem, Group, Select, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { zodResolver } from 'mantine-form-zod-resolver'
@@ -35,7 +35,7 @@ export default function Form() {
   })
 
   const data: ComboboxItem[] =
-    item.data?.data?.map((item) => ({ label: item.name, value: item.id.toString() })) || []
+    item.data?.map((item) => ({ label: item.name, value: item.id.toString() })) || []
 
   const handleSubmit = async (values: typeof form.values) => {
     create.mutate({
@@ -48,6 +48,7 @@ export default function Form() {
     <form onSubmit={form.onSubmit(handleSubmit)} className='w-full max-w-md'>
       {data.length > 0 && (
         <Select
+          data-testid='item'
           withAsterisk
           label='Select'
           placeholder='Pick value'
@@ -60,6 +61,7 @@ export default function Form() {
       )}
 
       <TextInput
+        data-testid='email'
         withAsterisk
         label='Email'
         placeholder='your@email.com'
@@ -68,6 +70,7 @@ export default function Form() {
       />
 
       <Checkbox
+        data-testid='termsOfService'
         mt='md'
         label='I agree to sell my privacy'
         key={form.key('termsOfService')}
@@ -75,7 +78,13 @@ export default function Form() {
       />
 
       <Group mt='md'>
-        <Button type='submit' fullWidth disabled={!form.isValid()} loading={create.isPending}>
+        <Button
+          type='submit'
+          fullWidth
+          disabled={!form.isValid()}
+          loading={create.isPending}
+          data-testid='submit'
+        >
           Submit
         </Button>
       </Group>
