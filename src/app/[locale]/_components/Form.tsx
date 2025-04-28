@@ -56,6 +56,7 @@ export default function Form() {
           data={data}
           checkIconPosition='right'
           nothingFoundMessage='Nothing found...'
+          mb='md'
           {...form.getInputProps('item')}
         />
       )}
@@ -66,12 +67,12 @@ export default function Form() {
         label='Email'
         placeholder='your@email.com'
         key={form.key('email')}
+        mb='md'
         {...form.getInputProps('email')}
       />
 
       <Checkbox
         data-testid='termsOfService'
-        mt='md'
         label='I agree to sell my privacy'
         key={form.key('termsOfService')}
         {...form.getInputProps('termsOfService', { type: 'checkbox' })}

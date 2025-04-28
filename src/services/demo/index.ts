@@ -7,29 +7,34 @@ import { notifications } from '@mantine/notifications'
 
 const host = process.env.NEXT_PUBLIC_API_HOST
 
+const fetchDemoList = (params: RequestDemoList) => {
+  return createFetcher<BaseResponse<DemoItem[]>>({
+    url: `${host}/api/demo/list`,
+    jsonMockup: '/mockup/demo/list.json',
+    params
+  })
+}
+
 const useDemoList = (params: RequestDemoList) => {
   return useQuery({
     queryKey: ['demoList'],
-    queryFn: () =>
-      createFetcher<BaseResponse<DemoItem[]>>({
-        url: `${host}/api/demo/list`,
-        jsonMockup: '/mockup/demo/list.json',
-        params
-      }),
+    queryFn: () => fetchDemoList(params),
     select: (data) => data.data
+  })
+}
+
+const fetchDemoCreate = (params: DemoItem) => {
+  return createFetcher<BaseResponse<DemoItem>>({
+    method: 'POST',
+    url: `${host}/api/demo/create`,
+    jsonMockup: '/mockup/demo/create.json',
+    params
   })
 }
 
 const useDemoCreate = () => {
   return useMutation({
-    mutationFn: (params: DemoItem) =>
-      createFetcher<BaseResponse<DemoItem>>({
-        method: 'POST',
-        url: `${host}/api/demo/create`,
-        jsonMockup: '/mockup/demo/create.json',
-        delay: 3000,
-        params
-      }),
+    mutationFn: (params: DemoItem) => fetchDemoCreate(params),
     onSuccess: () => {
       getQueryClient().invalidateQueries({ queryKey: ['demoList'] })
 

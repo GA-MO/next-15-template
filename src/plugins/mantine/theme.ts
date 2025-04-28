@@ -1,3 +1,5 @@
+'use client'
+
 import { createTheme, rem } from '@mantine/core'
 
 import '@mantine/dates/styles.css'
@@ -19,6 +21,8 @@ export const theme = createTheme({
       '#a73c00'
     ]
   },
+  white: '#fff',
+  black: '#000',
   defaultRadius: 'md',
   radius: {
     md: '10px',
@@ -27,6 +31,7 @@ export const theme = createTheme({
   },
   fontFamily: 'Roboto, sans-serif',
   headings: {
+    fontFamily: 'Greycliff CF, sans-serif',
     sizes: {
       h1: {
         fontSize: rem(32),
@@ -67,6 +72,13 @@ export const theme = createTheme({
     md: rem(16),
     lg: rem(20),
     xl: rem(24)
+  },
+  lineHeights: {
+    xs: '1.4',
+    sm: '1.45',
+    md: '1.55',
+    lg: '1.6',
+    xl: '1.65'
   },
   breakpoints: {
     xs: '360px',
