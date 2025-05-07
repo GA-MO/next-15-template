@@ -6,7 +6,7 @@ import { DatePickerInput } from '@mantine/dates'
 import { useState } from 'react'
 
 export default function DemoList() {
-  const [value, setValue] = useState<Date | null>(null)
+  const [value, setValue] = useState<string>('')
   const { data, isLoading, refetch } = useDemoList({ limit: 10 })
 
   if (isLoading) return <div>Loading...</div>
